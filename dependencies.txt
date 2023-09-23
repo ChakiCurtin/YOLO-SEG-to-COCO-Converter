@@ -1,0 +1,10 @@
+Shapely
+cv2
+json
+numpy
+pip3 install PIL
+pip3 install matplotlib
+pip3 install pyyaml
+argparse
+pathlib
+ pycocotools.coco
