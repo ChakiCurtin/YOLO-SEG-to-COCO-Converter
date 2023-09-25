@@ -65,14 +65,13 @@ def init_annotation_entry(anno_id: int, image_id: int, is_crowd: int, area: floa
                     "image_id": image_id,
                     "iscrowd": 0,
                     "area": area,
-                    "category_id": category_id,  # Assuming class IDs match object IDs
+                    "category_id": category_id,
                     "bbox": [],
                     "segmentation": [],
                 }
     return annotation_entry
     
 def show(coco_data: dict, image_dir: Path):
-    cocod_json = json.dumps(coco_data, indent= 4)
     coco = COCO()
     coco.dataset = coco_data
     coco.createIndex()
@@ -87,6 +86,7 @@ def show(coco_data: dict, image_dir: Path):
         image_path = os.path.join(image_dir, image_path)
         image = plt.imread(image_path)
         plt.imshow(image)
+        plt.title(str(img_info["file_name"]))
         coco.showAnns(anns, draw_bbox=args.bbox)
 
         plt.show()
