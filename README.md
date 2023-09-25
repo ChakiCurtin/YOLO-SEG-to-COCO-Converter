@@ -44,7 +44,7 @@ Can also be viewed in command line: `python3 yolo-to-coco.py --help`
 - --save : Path for the directory + file_name to save the annotations to. (e.g: ./output/test.json)
 - --show : Toggles showing the output images generated through conversion from yolo to coco
 - --classes: Path for directory + file_name for the classes.txt file for each class that exist in the dataset
-- --bbox: toggles showing bounding boxes for each annotation that exist in image. (Only worked when toggled with --show)
+- --bbox: toggles showing bounding boxes for each annotation that exist in image. (Only works when toggled with --show)
 
 ### testing | demo
 To test whether all dependencies are all installed and to see how file structure should be made for generating the json files:
