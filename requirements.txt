@@ -1,0 +1,5 @@
+matplotlib==3.7.2
+numpy==1.24.1
+opencv_python==4.8.0.74
+pycocotools==2.0.7
+Shapely==2.0.1

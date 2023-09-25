@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Yolo-Segmentation-to-COCO-format-Converter</title>
+        <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <h1 id="yolo-segmentation-to-coco-format-converter">Yolo-Segmentation-to-COCO-format-Converter</h1>
+<p>Sometimes refered to as yolo darknet format. Each line in the annotation (*.txt) file is as follows:
+<code>&lt;class-index&gt; &lt;x1&gt; &lt;y1&gt; &lt;x2&gt; &lt;y2&gt; ... &lt;xn&gt; &lt;yn&gt; (x1,y1 are point coordinates)</code></p>
+<p>This converter will use these coords and create both segmentation map and bounding box.</p>
+<p>Should work on all platforms. Tested on both Ubuntu 22.04.2 LTS (WSL2) and Windows 11. Supports Windows path style</p>
+<h2 id="dependencies">Dependencies</h2>
+<p>Dependencies file created through using <code>pipreqs</code>. To install all: (may need to change pip to pip3 on some platforms)</p>
+<pre><code class="language-bash">    pip install -r requirements.txt
+</code></pre>
+<h2 id="assumptions-about-dataset-style-and-format">Assumptions about dataset style and format</h2>
+<p>Directory:</p>
+<pre>
+    dataset_root_dir/
+        train/
+            Photo_00001.png
+            Photo_00001.txt
+            Photo_00002.png
+            Photo_00002.txt
+        .../
+            *.png
+            *.txt
+        classes.txt
+</pre>
+<p>classes.txt:
+<code>&lt;class id&gt; &lt;class name&gt; &lt;super category&gt;</code></p>
+<ol>
+<li>Each folder in dataset contains the image and its associated annotation file (named the same)</li>
+<li>classes.txt needs to be created including all the classes in the dataset, their name and a super category (if they have an official one, otherwise make one up?)</li>
+</ol>
+<h2 id="usage">Usage</h2>
+<p>Very simple to use and create COCO style annotation from yolo darknet annotations:</p>
+<h3 id="quick-explanation-of-command-line-arguments">Quick explanation of command line arguments:</h3>
+<p>Can also be viewed in command line: <code>python3 yolo-to-coco.py --help</code></p>
+<ul>
+<li>--dataset : Path of the dataset you want to convert annotations for, including the set (train, val, test). (e.g: /home/dataset/COCO/test/)</li>
+<li>--save : Path for the directory + file_name to save the annotations to. (e.g: ./output/test.json)</li>
+<li>--show : Toggles showing the output images generated through conversion from yolo to coco</li>
+<li>--classes: Path for directory + file_name for the classes.txt file for each class that exist in the dataset</li>
+<li>--bbox: toggles showing bounding boxes for each annotation that exist in image. (Only worked when toggled with --show)</li>
+</ul>
+<h3 id="testing--demo">testing | demo</h3>
+<p>To test whether all dependencies are all installed and to see how file structure should be made for generating the json files:</p>
+<pre><code class="language-bash">python3 yolo-to-coco.py --dataset ./demo/train/ --classes ./demo/classes.txt --save ./output/train.json
+</code></pre>
+<h3 id="actual-usages-few-options">Actual Usages (few options)</h3>
+<ol>
+<li>To just view dataset converted from yolo segmentation to coco:</li>
+</ol>
+<pre><code class="language-bash">python3 yolo-to-coco.py --dataset ./demo/train/ --classes ./demo/classes.txt --show <span class="hljs-comment">#change both dataset and classes to suit yours</span>
+</code></pre>
+<ol start="2">
+<li>To view dataset with both segmentation map and bounding boxes (good test to see whether annotation loaded properly and bounding boxes generated properly)</li>
+</ol>
+<pre><code class="language-bash">python3 yolo-to-coco.py --dataset ./demo/train/ --classes ./demo/classes.txt --show --bbox
+</code></pre>
+<ol start="3">
+<li>To save dataset (Good to use after testing using number 1 or 2.):</li>
+</ol>
+<pre><code class="language-bash">python3 yolo-to-coco.py --dataset ./demo/train/ --classes ./demo/classes.txt --save ./output/train.json
+</code></pre>
+<h3 id="other-mentions">Other mentions</h3>
+<p>To change some fields in output json file, the python file <a href="http://yolo-to-coco.py">yolo-to-coco.py</a> should have enough comments to avoid confusion.</p>
+<h2 id="citation">Citation</h2>
+<p>Image used in demo folder is from the train set of the MICCAI 2018 Grand Challenge titled: &quot;Multi-Organ Nuclei Segmentation Challenge&quot;.
+The official dataset is labeled MoNuSeg and contains 30 training images, 7 validation images and 14 test images with full annotations for each set.</p>
+<blockquote>
+<p>-- <cite>N. Kumar et al., &quot;A Multi-Organ Nucleus Segmentation Challenge,&quot; in IEEE Transactions on Medical Imaging, vol. 39, no. 5, pp. 1380-1391, May 2020, doi: 10.1109/TMI.2019.2947628.</cite></p>
+</blockquote>
+
+        
+        
+    </body>
+    </html>

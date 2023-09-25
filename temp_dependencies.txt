@@ -1,0 +1,10 @@
+Shapely
+cv2
+json
+numpy
+PIL
+matplotlib
+pyyaml
+argparse
+pathlib
+pycocotools
